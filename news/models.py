@@ -4,9 +4,9 @@ from django.db import models
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=255, null=False, blank=False)
+    title = models.CharField(max_length=255, blank=False, null=False)
     link = models.CharField(max_length=2048)
-    author_name = models.CharField(max_length=255, null=False, blank=False)
+    author_name = models.CharField(max_length=255, blank=False, null=False)
     upvoted = models.IntegerField(default=0)
     created = models.DateField(editable=False, auto_now_add=True)
 

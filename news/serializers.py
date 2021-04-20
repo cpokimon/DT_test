@@ -10,8 +10,6 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
-    # post_id = serializers.RelatedField('post_id')
-
     class Meta:
         model = Comment
         fields = ('post_id', 'author_name', 'content')
