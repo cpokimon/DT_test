@@ -11,6 +11,6 @@ def upvoute_post(request, id=None):
         post.upvoted += 1
         post.save()
     except Post.DoesNotExist:
-        return Response(status.HTTP_404_NOT_FOUND)
+        return Response({"detail": "Not found."}, status.HTTP_404_NOT_FOUND)
     else:
-        return Response(status=status.HTTP_200_OK)
+        return Response({"detail": "Upvouted."}, status=status.HTTP_200_OK)

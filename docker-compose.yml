@@ -14,10 +14,25 @@ services:
     restart: always
     ports:
       - 8080:8080
-#  app:
-#    build: .
-#    restart: always
-#    ports:
-#      - 127.0.0.1:80:8000
-#    depends_on:
-#      - postgres
+  app:
+    build: .
+    restart: always
+    ports:
+      - 127.0.0.1:80:8000
+    depends_on:
+      - postgres
+      - redis
+  celery_worker:
+          build: .
+          restart: always
+          command: celery -A project worker -l info
+          environment:
+            - DEBUG=1
+            - DJANGO_ALLOWED_HOSTS='*'
+          depends_on:
+            - app
+            - redis
+  redis:
+    image: redis:5-alpine
+    ports:
+    - 127.0.0.1:5672:6379
