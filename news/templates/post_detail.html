@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h2>Title: {{ object.title }}</h2>
+    <p>{{ object.link }}</p>
+    <p>Upvoted times today: {{ object.upvoted }}</p>
+    <p>Created: {{ object.created }} By: {{ object.author_name }}</p>
+    <h3>Comments</h3>
+    {% for comment in comments %}
+            <p>Message: {{ comment.content }}</p>
+            <p>By: {{ comment.author_name }} At: {{ comment.created }} </p>
+    {% endfor %}
+{% endblock body %}
