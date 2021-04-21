@@ -1,8 +1,8 @@
 # DT_test
 
-#####Postman collection: [GitHub](http://github.com)
+##### Postman collection: [GitHub](http://github.com)
 
-#####Quick start:
+##### Quick start:
   1. git clone https://github.com/cpokimon/DT_test.git
   2. docker-compose up --build        ---> ufter building process open a new terminal
   3. docker ps                        ---> now we need to find the container named "dt_test_app" and copy id (f.e 9aaced99f547)
