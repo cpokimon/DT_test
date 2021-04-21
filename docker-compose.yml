@@ -13,7 +13,9 @@ services:
     ports:
       - 8080:8080
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     restart: always
     command: python manage.py runserver 0.0.0.0:8000
     ports:
@@ -22,14 +24,18 @@ services:
       - postgres
       - redis
   celery_worker:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     restart: always
     command: celery -A project worker -l info
     depends_on:
       - app
       - redis
   celery_beat:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     restart: always
     command: celery -A project beat -l info
     depends_on:
