@@ -7,8 +7,6 @@ services:
       POSTGRES_USERNAME: admin
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: postgres
-    ports:
-      - 5432:5432
   adminer:
     image: adminer
     restart: always
@@ -17,22 +15,25 @@ services:
   app:
     build: .
     restart: always
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
       - 127.0.0.1:80:8000
     depends_on:
       - postgres
       - redis
   celery_worker:
-          build: .
-          restart: always
-          command: celery -A project worker -l info
-          environment:
-            - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS='*'
-          depends_on:
-            - app
-            - redis
+    build: .
+    restart: always
+    command: celery -A project worker -l info
+    depends_on:
+      - app
+      - redis
+  celery_beat:
+    build: .
+    restart: always
+    command: celery -A project beat -l info
+    depends_on:
+      - app
+      - redis
   redis:
-    image: redis:5-alpine
-    ports:
-    - 127.0.0.1:5672:6379
+    image: library/redis:3-alpine

@@ -1,11 +1,14 @@
 from django.db import transaction
 from .models import Post
-from project.celery import app as celery_app
+from celery.task import periodic_task
+from datetime import timedelta
 
 
-@celery_app.task(name='reset_upvoutes')
+@periodic_task(run_every=timedelta(seconds=3600))
 def reset_upvoutes():
     posts = Post.objects.all()
+    # I really have to add filtration here
+    # but getting errors with celery worker :(
     with transaction.atomic():
         for post in posts:
             post.upvoted = 0

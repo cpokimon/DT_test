@@ -17,4 +17,3 @@ class Comment(models.Model):
     author_name = models.CharField(max_length=255, null=False, blank=False)
     content = models.TextField()
     created = models.DateField(editable=False, auto_now_add=True)
-
