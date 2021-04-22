@@ -5,6 +5,15 @@
     <p>{{ object.link }}</p>
     <p>Upvoted times today: {{ object.upvoted }}</p>
     <p>Created: {{ object.created }} By: {{ object.author_name }}</p>
+    <a href="{% url 'post_comment' pk=object.id %}">
+        <button>Add comment</button>
+    </a>
+    <a href="{% url 'home' %}">
+        <button>Back to posts</button>
+    </a>
+    <a href="{% url 'upvote_post' pk=object.id %}">
+        <button>Upvote</button>
+    </a>
     <h3>Comments</h3>
     {% for comment in comments %}
             <p>Message: {{ comment.content }}</p>

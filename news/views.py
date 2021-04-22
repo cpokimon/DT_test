@@ -1,8 +1,10 @@
 from django.views.generic import ListView, DetailView
+from django.shortcuts import redirect, render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Post, Comment
+from .forms import CommentForm
 
 
 class PostListView(ListView):
@@ -25,13 +27,37 @@ class PostDetailView(DetailView):
         return context
 
 
-@api_view()
-def upvoute_post(request, id=None):
+def post_comment_create_view(request, pk):
+    template = 'create_comment.html'
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        form.cleaned_data['post_id'] = pk
+        form.save()
+        return redirect('post_detail', pk=pk)
+    context = {"form": form}
+    return render(request, template, context)
+
+
+def upvote_post_view(request, pk=None):
     try:
-        post = Post.objects.get(id=id)
-        post.upvoted += 1
-        post.save()
+        upvote_post(pk)
+    except Post.DoesNotExist:
+        return redirect('home')
+    else:
+        return redirect('post_detail', pk=pk)
+
+
+@api_view()
+def upvoute_post_api(request, pk=None):
+    try:
+        upvote_post(pk)
     except Post.DoesNotExist:
         return Response({"detail": "Not found."}, status.HTTP_404_NOT_FOUND)
     else:
         return Response({"detail": "Upvouted."}, status.HTTP_200_OK)
+
+
+def upvote_post(id):
+    post = Post.objects.get(id=id)
+    post.upvoted += 1
+    post.save()
