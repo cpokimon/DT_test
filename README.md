@@ -8,4 +8,7 @@
   3. docker ps                        ---> now we need to find the container named "dt_test_app" and copy id (f.e 9aaced99f547)
   4. docker exec -it <place here copied id> sh
   5. python manage.py migrate
-  6. open browser and open address 'localhost'
+  6. python manage.py createsuperuser (add login, email, pass) 
+  7. open browser, open address 'localhost/admin' and login
+  8. create several records in tables "Posts" and "Comments"
+  9. open browser and open address 'localhost'
