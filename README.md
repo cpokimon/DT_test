@@ -1,6 +1,6 @@
 # DT_test
 
-##### Postman collection: [link](https://www.getpostman.com/collections/f363478ae427eae10f16)
+##### [Postman collection](https://www.getpostman.com/collections/f363478ae427eae10f16)
 
 ##### Quick start:
   1. git clone https://github.com/cpokimon/DT_test.git
