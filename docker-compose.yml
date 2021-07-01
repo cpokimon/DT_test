@@ -23,6 +23,11 @@ services:
     depends_on:
       - postgres
       - redis
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/app
+
   celery_worker:
     build:
       context: .
@@ -32,6 +37,10 @@ services:
     depends_on:
       - app
       - redis
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/app
   celery_beat:
     build:
       context: .
@@ -41,5 +50,9 @@ services:
     depends_on:
       - app
       - redis
+    volumes:
+      - type: bind
+        source: .
+        target: /usr/app
   redis:
     image: library/redis:3-alpine

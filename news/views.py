@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -40,7 +40,9 @@ def post_comment_create_view(request, pk):
 
 def upvote_post_view(request, pk=None):
     try:
-        upvote_post(pk)
+        post = Post.objects.get(id=pk)
+        post.upvote()
+        post.save()
     except Post.DoesNotExist:
         return redirect('home')
     else:
@@ -49,15 +51,6 @@ def upvote_post_view(request, pk=None):
 
 @api_view()
 def upvoute_post_api(request, pk=None):
-    try:
-        upvote_post(pk)
-    except Post.DoesNotExist:
-        return Response({"detail": "Not found."}, status.HTTP_404_NOT_FOUND)
-    else:
-        return Response({"detail": "Upvouted."}, status.HTTP_200_OK)
-
-
-def upvote_post(id):
-    post = Post.objects.get(id=id)
-    post.upvoted += 1
-    post.save()
+    post = get_object_or_404(Post, id=pk)
+    post.upvote()
+    return Response({"detail": "Upvouted."}, status.HTTP_200_OK)
