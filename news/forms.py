@@ -20,6 +20,6 @@ class CommentForm(forms.ModelForm):
         if post:
             comment = Comment()
             comment.author_name = data['author_name']
-            comment.post_id = post
+            comment.post = post
             comment.content = data['content']
             comment.save()

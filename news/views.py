@@ -11,6 +11,7 @@ class PostListView(ListView):
     model = Post
     paginate_by = 5
     queryset = Post.objects.all()
+    ordering = ['id']
     context_object_name = 'posts'
     template_name = 'posts.html'
 
@@ -53,4 +54,5 @@ def upvote_post_view(request, pk=None):
 def upvoute_post_api(request, pk=None):
     post = get_object_or_404(Post, id=pk)
     post.upvote()
+    post.save()
     return Response({"detail": "Upvouted."}, status.HTTP_200_OK)

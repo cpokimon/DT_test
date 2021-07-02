@@ -7,7 +7,7 @@ class PostModelTestCase(TestCase):
     def setUp(self) -> None:
         self.post_title = 'TestPost'
 
-        Post.objects.create(
+        self.post = Post.objects.create(
             title=self.post_title,
             link='https://google.com',
             author_name='TestAuthor',
@@ -28,4 +28,10 @@ class PostModelTestCase(TestCase):
         post_second_request.save()
         post_second_request.refresh_from_db()
         self.assertEqual(2, post_second_request.upvoted)
+
+    def test_str(self):
+        self.assertEqual(
+            f'ID:{self.post.id}, TITLE:{self.post.title[:10]}',
+            self.post.__str__(),
+        )
 

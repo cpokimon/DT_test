@@ -3,6 +3,7 @@ from rest_framework import status
 from django.urls import reverse
 from ..models import Post, Comment
 from ..serializers import PostSerializer, CommentSerializer
+from ..views import upvoute_post_api
 from django.utils import timezone
 
 
@@ -66,6 +67,15 @@ class PostsApiTestCase(APITestCase):
 
         self.assertEqual(status.HTTP_200_OK, responce.status_code)
         self.assertEqual(serializer_data, responce.data['results'])
+
+    def test_upvote_post(self):
+        url = reverse('post_upvote', kwargs={'pk': self.post_1.id})
+        responce = self.client.get(url)
+
+        post_upvoted = Post.objects.get(id=self.post_1.id).upvoted
+
+        self.assertEqual(status.HTTP_200_OK, responce.status_code)
+        self.assertEqual(1, post_upvoted)
 
 
 class CommentApiTestCase(APITestCase):
