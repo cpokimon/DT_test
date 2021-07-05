@@ -3,7 +3,6 @@ from rest_framework import status
 from django.urls import reverse
 from ..models import Post, Comment
 from ..serializers import PostSerializer, CommentSerializer
-from ..views import upvoute_post_api
 from django.utils import timezone
 
 
