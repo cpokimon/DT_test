@@ -1,6 +1,7 @@
 from django.views.generic import ListView, DetailView
 from django.shortcuts import redirect, render, get_object_or_404
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Post, Comment
@@ -51,6 +52,7 @@ def upvote_post_view(request, pk=None):
 
 
 @api_view()
+@permission_classes([IsAuthenticated])
 def upvoute_post_api(request, pk=None):
     post = get_object_or_404(Post, id=pk)
     post.upvote()
