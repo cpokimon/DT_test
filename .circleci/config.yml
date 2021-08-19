@@ -1,0 +1,27 @@
+version: "2.1"
+jobs:
+  build:
+    working_directory: /dt_test_proj
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --no-cache py-pip=9.0.0-r1
+            pip install docker-compose==1.15.0
+      - run:
+          name: Run tests
+          command: |
+            docker-compose up -d
+            docker-compose run app python manage.py test
+      - deploy:
+          name: Publish application Docker image
+          command: |
+            docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
+            docker tag dt_test_app $DOCKER_HUB_USER_ID/dt_test:$CIRCLE_SHA1
+            docker tag dt_test_app $DOCKER_HUB_USER_ID/dt_test:latest
+            docker push $DOCKER_HUB_USER_ID/dt_test:$CIRCLE_SHA1
+            docker push $DOCKER_HUB_USER_ID/dt_test:latest
