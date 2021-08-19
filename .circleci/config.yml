@@ -1,7 +1,7 @@
 version: "2.1"
 jobs:
   build:
-    working_directory: /dt_test_proj
+    working_directory: /usr/app
     docker:
       - image: docker:17.05.0-ce-git
     steps:
@@ -16,6 +16,7 @@ jobs:
           name: Run tests
           command: |
             docker-compose up -d
+            docker-compose run app ls
             docker-compose run app python manage.py test
       - deploy:
           name: Publish application Docker image
