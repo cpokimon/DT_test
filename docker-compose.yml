@@ -24,9 +24,7 @@ services:
       - postgres
       - redis
     volumes:
-      - type: bind
-        source: .
-        target: /usr/app
+      - .:/usr/app
 
   celery_worker:
     build:
@@ -38,9 +36,7 @@ services:
       - app
       - redis
     volumes:
-      - type: bind
-        source: .
-        target: /usr/app
+      - .:/usr/app
   celery_beat:
     build:
       context: .
@@ -51,8 +47,6 @@ services:
       - app
       - redis
     volumes:
-      - type: bind
-        source: .
-        target: /usr/app
+      - .:/usr/app
   redis:
     image: library/redis:3-alpine
