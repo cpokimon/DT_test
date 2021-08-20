@@ -19,7 +19,7 @@ jobs:
           command: |
             pwd
             ls
-            ENV: prod docker-compose up -d
+            docker-compose up -d
             docker-compose run app python manage.py test
       - deploy:
           name: Publish application Docker image
