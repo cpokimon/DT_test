@@ -15,6 +15,7 @@ jobs:
       - run:
           name: Run tests
           command: |
+            pwd
             ls
             docker-compose up -d
             docker-compose run app python manage.py test
