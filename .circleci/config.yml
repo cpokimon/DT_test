@@ -20,7 +20,9 @@ jobs:
             pwd
             ls
             docker-compose up -d
-            docker-compose run app python /usr/app/manage.py test
+            docker-compose run app ls
+            docker-compose run app pwd
+            docker-compose run app python manage.py test
       - deploy:
           name: Publish application Docker image
           command: |
