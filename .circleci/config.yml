@@ -30,5 +30,6 @@ jobs:
             docker login -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
             docker tag dt_proj_app $DOCKER_HUB_USER_ID/dt_test:$CIRCLE_SHA1
             docker tag dt_proj_app $DOCKER_HUB_USER_ID/dt_test:latest
+            docker ps
             docker push $DOCKER_HUB_USER_ID/dt_test:$CIRCLE_SHA1
             docker push $DOCKER_HUB_USER_ID/dt_test:latest
