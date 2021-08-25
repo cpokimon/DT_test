@@ -26,6 +26,7 @@ jobs:
       - deploy:
           name: Publish application Docker image
           command: |
+            docker ps
             docker login -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
             docker tag dt_proj_app $DOCKER_HUB_USER_ID/dt_test:$CIRCLE_SHA1
             docker tag dt_proj_app $DOCKER_HUB_USER_ID/dt_test:latest
