@@ -1,5 +1,5 @@
 django==3.2
-psycopg2==2.8.6
+psycopg2-binary==2.8.6
 djangorestframework
 celery==4.4.1
 redis==3.2.0
