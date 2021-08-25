@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: Dockerfile.${ENV}
     restart: always
-    command: python usr/app/manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     ports:
       - 127.0.0.1:80:8000
     depends_on:
