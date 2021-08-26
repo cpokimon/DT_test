@@ -13,24 +13,15 @@ jobs:
             apk add --no-cache py-pip=9.0.0-r1
             pip install docker-compose==1.15.0
       - run:
-          environment:
-            ENV: prod
           name: Run tests
           command: |
-            pwd
-            ls
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-            docker-compose run app ls
-            docker-compose run app pwd
             docker-compose run app python manage.py test
       - deploy:
           name: Publish application Docker image
           command: |
-            docker ps
-            docker image ls
             docker login -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
             docker image tag dttest_app $DOCKER_HUB_USER_ID/dt_test:$CIRCLE_SHA1
             docker image tag dttest_app $DOCKER_HUB_USER_ID/dt_test:latest
-            docker ps
             docker push $DOCKER_HUB_USER_ID/dt_test:$CIRCLE_SHA1
             docker push $DOCKER_HUB_USER_ID/dt_test:latest

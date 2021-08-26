@@ -3,19 +3,7 @@ services:
   postgres:
     image: postgres
     restart: always
-    environment:
-      POSTGRES_USERNAME: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: postgres
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
     restart: always
     command: python manage.py runserver 0.0.0.0:8000
     ports:
@@ -23,30 +11,17 @@ services:
     depends_on:
       - postgres
       - redis
-#    volumes:
-#      - .:/usr/app
-
   celery_worker:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
     restart: always
     command: celery -A project worker -l info
     depends_on:
       - app
       - redis
-    volumes:
-      - .:/usr/app
   celery_beat:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
     restart: always
     command: celery -A project beat -l info
     depends_on:
       - app
       - redis
-    volumes:
-      - .:/usr/app
   redis:
     image: library/redis:3-alpine
