@@ -23,8 +23,8 @@ services:
     depends_on:
       - postgres
       - redis
-    volumes:
-      - .:/usr/app
+#    volumes:
+#      - .:/usr/app
 
   celery_worker:
     build:
