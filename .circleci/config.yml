@@ -19,7 +19,7 @@ jobs:
           command: |
             pwd
             ls
-            docker-compose up -d
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
             docker-compose run app ls
             docker-compose run app pwd
             docker-compose run app python manage.py test
