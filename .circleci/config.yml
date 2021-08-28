@@ -25,7 +25,7 @@ jobs:
             docker image tag dttest_app $DOCKER_HUB_USER_ID/dt_test:latest
             docker push $DOCKER_HUB_USER_ID/dt_test:$CIRCLE_SHA1
             docker push $DOCKER_HUB_USER_ID/dt_test:latest
-      - deploy_prod:
+      - run:
           name: Deploy in production
           command: |
             ssh $AZURE_USERNAME@$PRODUCTION_IP $AZURE_USER_PASSWORD
