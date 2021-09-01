@@ -1,4 +1,8 @@
 version: "2.1"
+
+orbs:
+  irc: circleci/irc@0.2.0
+
 jobs:
   build:
     working_directory: ~/dt_test/DT_test
@@ -32,4 +36,6 @@ jobs:
             git pull origin master
             docker login -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
             docker-compose -f docker-compose.yml -f docker-compose.build.yml -f docker-compose.prod.yml up --build -d
-            exit
+      - irc/notify:
+          channel: circle-notify
+          message: Build completed!
